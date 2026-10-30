@@ -5,9 +5,12 @@ import { readStatus } from './status.js';
 import { Layout } from './views/layout.js';
 import { StatusBoard } from './views/status.js';
 import { registerDigestPageRoute } from './digest/page-route.js';
+import { registerJsonRoute } from './digest/json-route.js';
 
 export function createApp(config: RigConfig = loadConfig()) {
   const app = new Hono();
+
+  registerJsonRoute(app, config);
 
   app.get('/health', (c) => c.json({ ok: true, lane: lane().id }));
 
