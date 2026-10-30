@@ -14,6 +14,9 @@ const css = `
   table { border-collapse: collapse; width: 100%; }
   th, td { text-align: left; padding: .35rem .75rem .35rem 0; border-bottom: 1px solid var(--line); }
   th { color: var(--mute); font-weight: normal; }
+  .digest-table-scroll { max-width: 100%; overflow-x: auto; }
+  .digest-table { min-width: 58rem; }
+  .digest-table th, .digest-table td { overflow-wrap: anywhere; vertical-align: top; }
   .warn { color: var(--warn); }
   .mute { color: var(--mute); }
 `;
