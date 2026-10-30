@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-10-30
 ---
 
 # Morning digest
@@ -68,7 +69,11 @@ self-contained, ADR 0001). Put it on your own public host, one where you can upl
 or static host, ADR 0003), so it opens from a public HTTPS link. Send the reviewer the link and the
 issues for this plan.
 
-Done when: the preview link is sent to the reviewer.
+Done when: the reviewer has looked at the preview and responded.
+
+Issue #7 was closed prematurely after the link was sent, before the reviewer had looked. The
+course rejected that attempt; #7 was reopened and completed only after the reviewer confirmed
+they had seen the preview.
 
 ## 4. Clean up
 
@@ -76,4 +81,20 @@ The preview carries this lane's marker on a public link (ADR 0003). Take the mar
 page again with `LANE_MARKER` unset (the banner reads "no marker set") and upload it over the same
 link. Move this plan to `docs/plans/done/` with its issue list.
 
-Done when: the preview link no longer shows the lane marker.
+Done when: the marker-free preview replaces the marked page at the same link.
+
+The public page is https://mega-s01e04.idbox.online/. After replacement, its bytes matched the
+regenerated marker-free file (SHA-256 `8959e82b2c9502bfa979a3d83b239a773b44f66cf1d3a836771b5fb99bb6ce63`).
+
+## Issues
+
+| # | Issue | Blocked by | Closed |
+|---|-------|-----------|--------|
+| 1 | [Shared digest contract](https://github.com/marcinczenko/mega-s01e04/issues/1) | — | 2026-10-30 |
+| 2 | [Run log reader](https://github.com/marcinczenko/mega-s01e04/issues/2) | #1 | 2026-10-30 |
+| 3 | [Digest page](https://github.com/marcinczenko/mega-s01e04/issues/3) | #1 | 2026-10-30 |
+| 4 | [Digest JSON](https://github.com/marcinczenko/mega-s01e04/issues/4) | #1 | 2026-10-30 |
+| 5 | [Board link and counts](https://github.com/marcinczenko/mega-s01e04/issues/5) | #1, #2 | 2026-10-30 |
+| 6 | [Digest route tests](https://github.com/marcinczenko/mega-s01e04/issues/6) | #1–#4 | 2026-10-30 |
+| 7 | [Preview for review](https://github.com/marcinczenko/mega-s01e04/issues/7) | #1–#6 | 2026-10-30 |
+| 8 | [Remove preview marker and archive plan](https://github.com/marcinczenko/mega-s01e04/issues/8) | #7 review received | 2026-10-30 |
