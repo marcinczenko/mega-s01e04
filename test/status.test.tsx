@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createApp } from '../src/app.js';
 
 const config = { adapter: 'shim', installed: '2026-10-29T14:06:00+01:00', beatEverySeconds: 60, runsDir: 'runs' };
@@ -16,5 +19,31 @@ describe('status board', () => {
   it('health answers with the lane id', async () => {
     const res = await createApp(config).request('/health');
     expect(await res.json()).toEqual({ ok: true, lane: 'lane-07' });
+  });
+
+  it('links each on-disk night with event counts in newest-first order', async () => {
+    const runsDir = mkdtempSync(join(tmpdir(), 'rig-status-'));
+    try {
+      writeFileSync(join(runsDir, '2026-10-27.jsonl'), [
+        JSON.stringify({ at: '2026-10-27T08:00:00+01:00', job: 'old', status: 'ok', owner: 'ada' }),
+      ].join('\n'));
+      writeFileSync(join(runsDir, '2026-10-28.jsonl'), [
+        JSON.stringify({ at: '2026-10-28T08:00:00+01:00', job: 'new', status: 'ok', owner: 'ada' }),
+        JSON.stringify({ at: '2026-10-28T08:01:00+01:00', job: 'new', status: 'retry', owner: 'ada' }),
+        JSON.stringify({ at: '2026-10-28T08:02:00+01:00', job: 'new', status: 'fail', owner: 'ada' }),
+      ].join('\n'));
+      mkdirSync(join(runsDir, 'not-a-night'), { recursive: true });
+
+      const res = await createApp({ ...config, runsDir }).request('/');
+      const html = await res.text();
+      expect(res.status).toBe(200);
+      expect(html.indexOf('2026-10-28')).toBeLessThan(html.indexOf('2026-10-27'));
+      expect(html).toContain('<a href="/digest/2026-10-28">2026-10-28</a>');
+      expect(html).toContain('ok 1 · retry 1 · fail 1');
+      expect(html).toContain('<a href="/digest/2026-10-27">2026-10-27</a>');
+      expect(html).toContain('ok 1 · retry 0 · fail 0');
+    } finally {
+      rmSync(runsDir, { recursive: true, force: true });
+    }
   });
 });
