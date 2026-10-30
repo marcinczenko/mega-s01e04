@@ -32,6 +32,9 @@ Read first: `docs/vision.md`, `docs/styleguide.md`. Decisions: `docs/adr/`.
 
 ## Skills
 
+- `plan-to-issues`: approved issue format and dependency review; exact conventions live in ADR 0002.
+- `upload-preview`: SSH/SCP publication, HTTPS verification, waiting for review, and approved marker removal.
+
 Shared skills live in `.agents/skills/`, one folder each, `SKILL.md` inside. That folder is the
 one source for every harness on the team. If yours loads skills from somewhere else, point it
 here (a link or a config entry). Don't copy: copies drift.

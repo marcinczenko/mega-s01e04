@@ -14,17 +14,19 @@ in a shell this agent can run.
 2. Draft the split as a table: title · plan section · scope · done when · blocked by.
    One issue per unit of work.
 3. **Stop and show the table to the human.** Publish nothing until they approve it.
-4. Ask the human what every issue here must carry (fields, labels, wording), unless it is
-   already written down in this session or in the repo.
+4. Use the human-approved body and label rules in [ADR 0002](../../../docs/adr/0002-plans-are-files-work-is-issues.md#issue-body-and-labels). They specify the source opening, Scope, Done when, Blocked by, and `plan:morning-digest` for that plan. Ask only for missing requirements or changes; record newly approved conventions there.
+   Distinguish dependencies needed to start from those needed to finish. A review issue stays open until the reviewer responds, and cleanup waits on it.
 5. Create each issue in dependency order, so blocked-by can cite real numbers:
 
    ```sh
-   gh issue create --title "<title>" --body-file <tmp.md>
+   gh issue create --title "<title>" --body-file <tmp.md> --label "<approved-plan-label>"
    ```
 
 6. Record every issue URL from gh's output (not from memory) and reply with the list.
 
-Closing one, with the closing comment from AGENTS.md:
+Close only after every completion condition holds, with the closing comment from AGENTS.md. If a pushed closing keyword already closed the issue, add the worker record with `gh issue comment --body-file` instead; `gh issue close` skips already-closed issues. Do not use closing keywords for review or cleanup work while external confirmation or publication is pending.
+
+For an issue still open:
 
 ```sh
 gh issue close <n> -c "<closing comment>"

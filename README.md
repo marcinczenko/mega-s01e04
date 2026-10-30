@@ -40,4 +40,6 @@ The regenerated banner says `no marker set`. Uploading either capture, including
 same public URL with the marker-free copy, is a separate approval step. Never add the captured
 HTML to Git, an issue, or a chat attachment.
 
+For SSH/SCP publication and replacement, use [upload-preview](.agents/skills/upload-preview/SKILL.md). Supply host-specific values from private local notes; they do not belong in this repository.
+
 Working on it with an agent: start at [AGENTS.md](AGENTS.md).

@@ -16,6 +16,34 @@ top to bottom by a single agent, including the parts that should have waited.
 - Issues are worked by workers, one issue each. The closing comment records which model did it
   (format in AGENTS.md), so we can see later which models are worth their cost per kind of task.
 
+## Issue body and labels
+
+The human approved this format for morning-digest on 30 October 2026. Every issue for that plan has the label `plan:morning-digest` and starts with `Source: plan.md § ` followed by its exact source section, for example `1`, `2a` or `4`. Keep that source reference after the plan is archived.
+
+Use this body shape (the first line below is a section 2a example):
+
+```md
+Source: plan.md § 2a
+
+## Scope
+
+Describe this unit of work and its boundaries.
+
+## Done when
+
+State the observable checks required before closure.
+
+## Blocked by
+
+Link actual issue numbers, or write None. Name external decisions separately.
+```
+
+Create prerequisites first so dependencies use real issue numbers. Distinguish what a worker needs to start from what must exist to validate and close its issue. For example, a page worker can start after the shared contract, but its finished page must be checked against the real reader.
+
+A review issue is done only after the reviewer has looked and responded. Sending the URL does not meet that condition. Its cleanup issue is blocked by that response and separate approval to replace the public page. Keep the reviewed marker-bearing page unchanged while waiting.
+
+For future plans, propose and get approval for the corresponding `plan:` label rather than reusing `plan:morning-digest`. Retain the approved fields unless the human changes them. Record changes here so the next session does not reconstruct the format from old issues.
+
 ## Consequences
 
 - Anyone, human or agent, picks up a plan cold from the repo alone.
